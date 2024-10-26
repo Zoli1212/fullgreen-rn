@@ -3,6 +3,7 @@ import React from "react";
 import { PRODUCTS } from "../../../assets/products";
 import ProductListItem from "../../components/product-list-item";
 import ListHeader from "../../components/list-header";
+import Auth from "../auth";
 
 
 
@@ -10,20 +11,21 @@ type Props = {};
 
 const Home = (props: Props) => {
   return (
-    <View>
-      <FlatList
-        data={PRODUCTS}
-        renderItem={({ item }) => <ProductListItem product={item} />}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-        ListHeaderComponent={ListHeader}
-        contentContainerStyle={styles.flatListContent}
-        columnWrapperStyle={styles.flatListColumn}
-        style={{ paddingHorizontal: 10, paddingVertical: 5 }}
-      >
-        Orders
-      </FlatList>
-    </View>
+    <Auth />
+    // <View>
+    //   <FlatList
+    //     data={PRODUCTS}
+    //     renderItem={({ item }) => <ProductListItem product={item} />}
+    //     keyExtractor={(item) => item.id.toString()}
+    //     numColumns={2}
+    //     ListHeaderComponent={ListHeader}
+    //     contentContainerStyle={styles.flatListContent}
+    //     columnWrapperStyle={styles.flatListColumn}
+    //     style={{ paddingHorizontal: 10, paddingVertical: 5 }}
+    //   >
+    //     Orders
+    //   </FlatList>
+    // </View>
   );
 };
 

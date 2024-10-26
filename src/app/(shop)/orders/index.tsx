@@ -11,6 +11,34 @@ import {
 import { Link, Stack } from 'expo-router';
 import { format } from 'date-fns';
 import { ORDERS } from '../../../../assets/orders';
+import { Order, OrderStatus } from '../../../../assets/types/order';
+
+const statusDisplayText : Record<OrderStatus, string> = {
+  Pending: 'Pending',
+  Completed: 'Completed',
+  Shipped: 'Shipped',
+  InTransit: 'In Transit',
+}
+
+const renderItem: ListRenderItem<Order> = ({ item }) => <Link href={`/orders/${item.slug}`} asChild>
+<Pressable style={styles.orderContainer}>
+  <View style={styles.orderContent}>
+    <View style={styles.orderDetailsContainer}>
+      <Text style={styles.orderItem}>{item.slug}</Text>
+     
+      <Text style={styles.orderDate}>
+        {format(new Date(item.date), 'MMM dd, yyyy')}
+      </Text>
+    </View>
+    <View
+      style={[styles.statusBadge, styles[`statusBadge_${item.status}`]]}
+    >
+      <Text style={styles.statusText}>{item.status.toUpperCase()}</Text>
+    </View>
+    </View>
+
+</Pressable>
+</Link>
 
 
 const Orders = () => {
