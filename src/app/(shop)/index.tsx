@@ -11,21 +11,21 @@ type Props = {};
 
 const Home = (props: Props) => {
   return (
-    <Auth />
-    // <View>
-    //   <FlatList
-    //     data={PRODUCTS}
-    //     renderItem={({ item }) => <ProductListItem product={item} />}
-    //     keyExtractor={(item) => item.id.toString()}
-    //     numColumns={2}
-    //     ListHeaderComponent={ListHeader}
-    //     contentContainerStyle={styles.flatListContent}
-    //     columnWrapperStyle={styles.flatListColumn}
-    //     style={{ paddingHorizontal: 10, paddingVertical: 5 }}
-    //   >
-    //     Orders
-    //   </FlatList>
-    // </View>
+
+    <View>
+      <FlatList
+        data={PRODUCTS}
+        renderItem={({ item }) => <ProductListItem product={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        ListHeaderComponent={ListHeader}
+        contentContainerStyle={styles.flatListContent}
+        columnWrapperStyle={styles.flatListColumn}
+        style={{ paddingHorizontal: 10, paddingVertical: 5 }}
+      >
+        Orders
+      </FlatList>
+    </View>
   );
 };
 
