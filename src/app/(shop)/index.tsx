@@ -4,12 +4,17 @@ import { PRODUCTS } from "../../../assets/products";
 import ProductListItem from "../../components/product-list-item";
 import ListHeader from "../../components/list-header";
 import Auth from "../auth";
+import { useAuth } from "../../providers/auth-provider";
 
 
 
 type Props = {};
 
 const Home = (props: Props) => {
+
+  const { user } = useAuth()
+
+  console.log(user)
   return (
 
     <View>

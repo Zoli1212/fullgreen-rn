@@ -36,6 +36,8 @@ export default function Auth() {
   });
 
   const signIn = async (data: zod.infer<typeof authSchema>) => {
+
+    console.log(data);
     const { error } = await supabase.auth.signInWithPassword(data);
 
     if(error){  
