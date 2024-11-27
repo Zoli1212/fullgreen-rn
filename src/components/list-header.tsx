@@ -40,7 +40,7 @@ export const ListHeader = ({
         <View style={styles.headerRight}>
           <Link style={styles.cartContainer} href='/cart' asChild>
             <Pressable>
-              {({ pressed }) => (
+              {({ pressed }: {pressed: any}) => (
                 <View>
                   <FontAwesome
                     name='shopping-cart'
