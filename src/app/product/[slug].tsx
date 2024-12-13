@@ -57,7 +57,7 @@ const ProductDetails = () => {
         addItem({
             id: product.id,
             title: product.title,
-            image: product.heroImage as string,
+            heroImage: product.heroImage as string,
             price: product.price,
             quantity,
             maxQuantity: product.maxQuantity,
