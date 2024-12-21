@@ -23,7 +23,7 @@ const authSchema = zod.object({
 
 export default function Auth() {
 
-  const { session } = useAuth();
+  const { session, setSession, setUser } = useAuth();
 
   if(session) return <Redirect href='/' />;
 
@@ -37,32 +37,99 @@ export default function Auth() {
 
   const signIn = async (data: zod.infer<typeof authSchema>) => {
 
-
-    const { error } = await supabase.auth.signInWithPassword(data);
-
-    if(error){  
-      alert(error.message);
-
-    }else{
-      Toast.show("Sign In Successful", {
-        type: "success",
+  
+    try {
+      const { error } = await supabase.auth.signInWithPassword(data);
+  
+      if (error) {
+        alert(error.message);
+        return;
+      }
+  
+      // Lekérjük a session-t és frissítjük az állapotot
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+  
+      if (sessionError) {
+        console.error('Failed to fetch session after sign-in:', sessionError);
+        return;
+      }
+  
+      setSession(session);
+  
+      if (session) {
+        const { data: user, error: userError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', session.user.id)
+          .single();
+  
+        if (userError) {
+          console.error('Failed to fetch user after sign-in:', userError);
+        } else {
+          setUser(user);
+        }
+      }
+  
+      Toast.show('Sign In Successful', {
+        type: 'success',
         placement: 'top',
         duration: 1500,
       });
+    } catch (err) {
+      console.error('Sign-in error:', err);
+      alert('An unexpected error occurred. Please try again.');
     }
   };
-
+  
   const signUp = async (data: zod.infer<typeof authSchema>) => {
-    const { error } = await supabase.auth.signUp(data);
 
-    if (error) {
-      alert(error.message);
-    } else {
+  
+    try {
+      const { error } = await supabase.auth.signUp(data);
+  
+      if (error) {
+        alert(error.message);
+        return;
+      }
+  
+      // Lekérjük a session-t és frissítjük az állapotot
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+  
+      if (sessionError) {
+        console.error('Failed to fetch session after sign-up:', sessionError);
+        return;
+      }
+  
+      setSession(session);
+  
+      if (session) {
+        const { data: user, error: userError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', session.user.id)
+          .single();
+  
+        if (userError) {
+          console.error('Failed to fetch user after sign-up:', userError);
+        } else {
+          setUser(user);
+        }
+      }
+  
       Toast.show('Signed up successfully', {
         type: 'success',
         placement: 'top',
         duration: 1500,
       });
+    } catch (err) {
+      console.error('Sign-up error:', err);
+      alert('An unexpected error occurred. Please try again.');
     }
   };
 

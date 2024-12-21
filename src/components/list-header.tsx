@@ -13,6 +13,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useCartStore } from '../store/cart-store';
 import { supabase } from '../lib/supabase';
 import { Tables } from '../types/database.types';
+import { useAuth } from '../providers/auth-provider';
 
 export const ListHeader = ({
   categories,
@@ -21,8 +22,19 @@ export const ListHeader = ({
 }) => {
   const { getItemCount } = useCartStore();
 
+  const { setUser, setSession } = useAuth();
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+  
+    try {
+      const { error } = await supabase.auth.signOut();
+  
+      if (error) throw error;
+  
+      setUser(null); // Töröljük a felhasználói adatokat
+      setSession(null); // Töröljük a session-t
+    } catch (error) {
+      console.error('Failed to sign out:', error);
+    }
   };
 
   return (
